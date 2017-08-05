@@ -1,0 +1,103 @@
+<html>
+   <head>
+      <title>Angular JS Forms + REST</title>
+      <script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+      <script src = "angularjs/src/module/mainApp.js"></script>
+      <script src = "angularjs/src/module/studentController.js"></script>
+
+      <style>
+         table, th , td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+         }
+         
+         table tr:nth-child(odd) {
+            background-color: #f2f2f2;
+         }
+         
+         table tr:nth-child(even) {
+            background-color: #ffffff;
+         }
+      </style>
+      
+   </head>
+   <body>
+      
+      <h2>Users Register: Angular JS Forms + REST</h2>
+      <div ng-app = "mainApp" ng-controller = "studentController">
+         
+         <form name = "studentForm" novalidate>
+            <table border = "0">
+               <tr>
+                  <td>Enter identification:</td>
+                  <td><input name = "identification" type = "text" ng-model = "identification" required>
+                     <span style = "color:red" ng-show = "studentForm.identification.$dirty && studentForm.identification.$invalid">
+                        <span ng-show = "studentForm.identification.$error.required">Identification is required.</span>
+                     </span>
+                  </td>
+               </tr>
+               
+               <tr>
+                  <td>Enter full name: </td>
+                  <td><input name = "fullname"  type = "text" ng-model = "fullName" required>
+                     <span style = "color:red" ng-show = "studentForm.fullname.$dirty && studentForm.fullname.$invalid">
+                        <span ng-show = "studentForm.fullname.$error.required">Full Name is required.</span>
+                     </span>
+                  </td>
+               </tr>
+               
+               <tr>
+                  <td>Email: </td><td><input name = "email" type = "email" ng-model = "email" length = "100" required>
+                     <span style = "color:red" ng-show = "studentForm.email.$dirty && studentForm.email.$invalid">
+                        <span ng-show = "studentForm.email.$error.required">Email is required.</span>
+                        <span ng-show = "studentForm.email.$error.email">Invalid email address.</span>
+                     </span>
+                  </td>
+               </tr>
+               
+               <tr>
+                  <!--
+                  <td>
+                     <button ng-click = "reset()">Reset</button>
+                  </td> -->
+                  <td colspan="2">
+                     <button ng-disabled = "studentForm.identification.$dirty &&
+                        studentForm.identification.$invalid || studentForm.fullname.$dirty &&
+                        studentForm.fullname.$invalid || studentForm.email.$dirty &&
+                        studentForm.email.$invalid" ng-click="post(identification,fullName,email)">POST</button>
+                        <button ng-click = "get()">GET</button>
+                        <button>DELETE</button>
+                        <button ng-click = "put(identification,fullName,email)">PUT</button>
+                  </td>
+               </tr>
+					
+            </table>
+
+            <div>
+               <table>
+                  <tr>
+                     <th>Identification</th>
+                     <th>Full Name</th>
+                     <th>Email</th>
+                  </tr>
+               
+                  <tr ng-repeat = "student in students">
+                     <td>{{ student.identification }}</td>
+                     <td>{{ student.fullName }}</td>
+                     <td>{{ student.email }}</td>
+                  </tr>
+
+                  <br/>
+               </table>
+
+               <br/>
+
+               {{resultPost}}
+            </div>
+
+         </form>
+      </div>
+      
+   </body>
+</html>
